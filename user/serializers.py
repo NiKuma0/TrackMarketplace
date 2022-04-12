@@ -1,10 +1,12 @@
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import PasswordField
 
 from user.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    password2 = serializers.CharField(label='Повторите пароль')
+    password = PasswordField(label='Пароль')
+    password2 = PasswordField(label='Повторите пароль')
 
     class Meta:
         model = User
@@ -15,9 +17,10 @@ class UserSerializer(serializers.ModelSerializer):
         )
     
     def save(self, **kwargs):
-        password2 = self.validated_data.pop('password2', None)
-        if self.validated_data['password'] != password2:
+        validated_data = {**self.validated_data, **kwargs}
+        password2 = validated_data.pop('password2', None)
+        if validated_data['password'] != password2:
             raise serializers.ValidationError({password2: 'Пароли не совподают'})
         return self.Meta.model.objects.create_user(
-            **self.validated_data
+            **validated_data
         )

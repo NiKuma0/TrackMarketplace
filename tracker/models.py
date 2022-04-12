@@ -1,3 +1,4 @@
+from tabnanny import verbose
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -5,11 +6,11 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-class Track(models.Model):
+class Tracker(models.Model):
     class TimeStepChoice(models.TextChoices):
         ONE_HOUR = '1h', 'Один час'
         TWELVE_HOURS = '12h', 'Двенадцать часов'
-        TWENTY_FOUR_HOURS = '24h', 'Двадцать часов'
+        TWENTY_FOUR_HOURS = '24h', 'Двадцать четыре часа'
 
     article = models.IntegerField(
         'Артикул',
@@ -28,8 +29,12 @@ class Track(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='tracks',
+        related_name='trackers',
     )
+
+    class Meta:
+        verbose_name = 'Трекер'
+        verbose_name_plural = 'Трекеры'
 
 
 class Card(models.Model):
@@ -48,8 +53,13 @@ class Card(models.Model):
         'Цена без скидки'
     )
     date = models.DateTimeField(auto_now=True)
-    track = models.ForeignKey(
-        Track,
+    tracker = models.ForeignKey(
+        Tracker,
         related_name='history',
         on_delete=models.PROTECT
     )
+
+    class Meta:
+        verbose_name = 'Карточка'
+        verbose_name_plural = 'Карточки'
+        orderring = ('date',)

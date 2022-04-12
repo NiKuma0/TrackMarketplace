@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class TrackConfig(AppConfig):
+class TrackerConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'track'
+    name = 'tracker'
     verbose_name = 'Мониторинг'

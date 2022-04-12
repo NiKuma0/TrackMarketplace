@@ -15,14 +15,14 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Track',
+            name='Tracker',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('article', models.IntegerField(verbose_name='Артикул')),
                 ('start_check', models.DateTimeField(verbose_name='Начало периуда')),
                 ('end_check', models.DateTimeField(verbose_name='Конец периода')),
                 ('step', models.CharField(choices=[('1h', 'Один час'), ('12h', 'Двенадцать часов'), ('24h', 'Двадцать часов')], max_length=255, verbose_name='Интервал')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tracks', to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='trackers', to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ('price', models.IntegerField(verbose_name='Цена')),
                 ('old_price', models.IntegerField(verbose_name='Цена без скидки')),
                 ('date', models.DateTimeField(auto_now=True)),
-                ('track', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='history', to='track.track')),
+                ('tracker', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='history', to='tracker.tracker')),
             ],
         ),
     ]

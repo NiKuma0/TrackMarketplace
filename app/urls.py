@@ -9,6 +9,6 @@ urlpatterns = (
     path('admin/', admin.site.urls),
     path('api/v1/token/', TokenObtainPairView.as_view(), name='get_token'),
     path('api/v1/token/refresh/', TokenRefreshView.as_view()),
-    path('api/v1/', include('track.urls')),
+    path('api/v1/', include('tracker.urls')),
     path('api/v1/', include('user.urls'))
 )

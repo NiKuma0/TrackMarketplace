@@ -28,6 +28,3 @@ def parsing(card_id: int | str):
     data['price'] = int(''.join(price[:-1]))
     data['old_price'] = int(''.join(old_price[:-1]))
     return data
-
-if __name__ == '__main__':
-    print(parsing(46485227))
