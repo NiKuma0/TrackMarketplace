@@ -8,17 +8,17 @@ User = get_user_model()
 
 class Tracker(models.Model):
     class TimeStepChoice(models.TextChoices):
-        ONE_HOUR = '1h', 'Один час'
-        TWELVE_HOURS = '12h', 'Двенадцать часов'
-        TWENTY_FOUR_HOURS = '24h', 'Двадцать четыре часа'
+        ONE_HOUR = '1 hours', 'Один час'
+        TWELVE_HOURS = '12 hours', 'Двенадцать часов'
+        TWENTY_FOUR_HOURS = '24 hours', 'Двадцать четыре часа'
 
     article = models.IntegerField(
         'Артикул',
     )
-    start_check = models.DateTimeField(
+    start_check = models.DateField(
         verbose_name='Начало периуда'
     )
-    end_check = models.DateTimeField(
+    end_check = models.DateField(
         verbose_name='Конец периода'
     )
     step = models.CharField(
@@ -35,6 +35,9 @@ class Tracker(models.Model):
     class Meta:
         verbose_name = 'Трекер'
         verbose_name_plural = 'Трекеры'
+    
+    def __str__(self) -> str:
+        return f'Трекер товара #{self.article}'
 
 
 class Card(models.Model):
@@ -56,10 +59,14 @@ class Card(models.Model):
     tracker = models.ForeignKey(
         Tracker,
         related_name='history',
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
+        verbose_name='Трекер',
     )
 
     class Meta:
         verbose_name = 'Карточка'
         verbose_name_plural = 'Карточки'
-        orderring = ('date',)
+        ordering = ('-date',)
+
+    def __str__(self) -> str:
+        return self.title[:30]

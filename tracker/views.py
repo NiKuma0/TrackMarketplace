@@ -3,7 +3,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from tracker.serializers import CardSerializer, TrackerSerializer
+from tracker.serializers import CardSerializer, TrackerSerializer, RetriveTrackerSerializer
 from tracker.models import Card, Tracker
 
 
@@ -14,12 +14,16 @@ class CardsViewSet(ModelViewSet):
 
 
 class TrackersViewsSet(ModelViewSet):
-    serializer_class = TrackerSerializer
     permission_classes = (IsAuthenticated,)
     queryset = Tracker.objects.all()
 
+    def get_serializer_class(self):
+        if self.detail:
+            return RetriveTrackerSerializer
+        return TrackerSerializer
+
     @action(('GET',), detail=False)
-    def my_trackers(self, request, *args, **kwargs):
+    def my(self, request, *args, **kwargs):
         """Возвращает трекеры пользавателя"""
         queryset = self.filter_queryset(self.get_queryset()).filter(user=request.user)
 

@@ -13,6 +13,7 @@ class TrackerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tracker
         fields = (
+            'pk',
             'article',
             'start_check',
             'end_check',
@@ -20,11 +21,12 @@ class TrackerSerializer(serializers.ModelSerializer):
         )
 
 class RetriveTrackerSerializer(serializers.ModelSerializer):
-    histrory = CardSerializer(many=True)
+    history = CardSerializer(many=True)
 
     class Meta:
         model = Tracker
         fields = (
+            'pk',
             'article',
             'start_check',
             'end_check',

@@ -1,0 +1,7 @@
+db.sqlite
+venv/
+__pycache__
+README.md
+.git
+.gitignore
+.vscode
